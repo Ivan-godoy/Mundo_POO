@@ -25,27 +25,18 @@ public class City extends ModeloBase {
         return "ID";
     }
 
-    public static City encontrarPorId(int id) {
-        Connection con = Database.getInstancia().getConexion();
-        City ciudad = null;
+    @Override
+    public boolean asignarValores(ResultSet resultSet) {
         try {
-            Statement sentencia = con.createStatement();
-            String sql = "";
-//            String sql = "SELECT * FROM " + getNombreTabla()
-//                    + " WHERE ID = " + id;
-            ResultSet resultado = sentencia.executeQuery(sql);
-            if (resultado.next()) {
-                ciudad = new City();
-                ciudad.setId(resultado.getInt("ID"));
-                ciudad.setName(resultado.getString("Name"));
-                ciudad.setCountryCode(resultado.getString("CountryCode"));
-                ciudad.setDistrict(resultado.getString("District"));
-                ciudad.setPopulation(resultado.getInt("Population"));
-            }
+            setId(resultSet.getInt("ID"));
+            setName(resultSet.getString("Name"));
+            setDistrict(resultSet.getString("District"));
+            setCountryCode(resultSet.getString("countryCode"));
+            setPopulation(resultSet.getInt("Population"));
         } catch (SQLException e) {
-            System.err.println("Error: " + e.getMessage());
+            e.printStackTrace();
         }
-        return ciudad;
+        return true;
     }
 
     public static ArrayList<City> getTodosLosRegistros(int limite) {

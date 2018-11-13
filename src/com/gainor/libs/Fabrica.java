@@ -16,10 +16,10 @@ public class Fabrica {
                     + " WHERE " + resultado.getLlavePrimaria() + " = " + id;
             ResultSet resultSet = sentencia.executeQuery(sql);
             if (resultSet.next()) {
-
+                resultado.asignarValores(resultSet);
             }
         } catch (Exception e) {
-
+            System.out.println("Error al realizar la busqueda " + e.getMessage());
         }
         return resultado;
     }
